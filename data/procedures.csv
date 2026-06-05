@@ -1,0 +1,11 @@
+hospital,insurer,procedure,cpt_code,chargemaster_rate,negotiated_rate,cash_pay_rate,region
+UCSF Medical Center,Blue Shield,Knee MRI,73721,4200,850,620,Bay Area
+UCSF Medical Center,Anthem Blue Cross,Knee MRI,73721,4200,1100,620,Bay Area
+Cedars-Sinai,Blue Shield,Knee MRI,73721,5100,1200,750,Los Angeles
+Cedars-Sinai,Anthem Blue Cross,Knee MRI,73721,5100,1450,750,Los Angeles
+Sutter Health,Blue Shield,Colonoscopy,45378,3800,920,580,Bay Area
+Sutter Health,Kaiser,Colonoscopy,45378,3800,780,580,Bay Area
+Stanford Health Care,Blue Shield,Lipid Panel,80061,380,42,28,Bay Area
+Stanford Health Care,Anthem Blue Cross,Lipid Panel,80061,380,58,28,Bay Area
+Sharp HealthCare,Blue Shield,Knee MRI,73721,3900,980,600,San Diego
+Sharp HealthCare,Anthem Blue Cross,Colonoscopy,45378,3500,870,520,San Diego
