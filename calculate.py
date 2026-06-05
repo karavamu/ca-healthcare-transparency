@@ -244,3 +244,117 @@ get_recommendation(
     monthly_premium=320,
     expected_procedures=3
 )
+
+# ─────────────────────────────────────────
+# INTERACTIVE MODE
+# ─────────────────────────────────────────
+
+def show_available_options(rows):
+    """Show the user what procedures and 
+    insurers are in the database."""
+    
+    procedures = sorted(set(row['procedure'] for row in rows))
+    insurers = sorted(set(row['insurer'] for row in rows))
+    
+    print("\nAvailable procedures:")
+    for i, procedure in enumerate(procedures, 1):
+        print(f"  {i}. {procedure}")
+    
+    print("\nAvailable insurers:")
+    for i, insurer in enumerate(insurers, 1):
+        print(f"  {i}. {insurer}")
+
+def interactive_mode():
+    """Ask the user for their inputs and
+    return a personalized cost estimate."""
+    
+    # Load data once
+    rows = load_data()
+    
+    print("\n" + "="*55)
+    print("CALIFORNIA HEALTHCARE TRANSPARENCY PROJECT")
+    print("="*55)
+    print("Let us find the true cost of your procedure.")
+    
+    # Show what is available
+    show_available_options(rows)
+    
+    # Get user inputs
+    print("\n--- YOUR INFORMATION ---")
+    
+    procedure = input("\nEnter procedure name exactly as shown above: ")
+    insurer = input("Enter insurer name exactly as shown above: ")
+    
+    deductible_remaining = float(input(
+        "How much deductible do you have remaining ($): "
+    ))
+    
+    coinsurance_pct = float(input(
+        "What is your coinsurance percentage (e.g. 20 for 20%): "
+    ))
+    
+    monthly_premium = float(input(
+        "What is your monthly premium ($): "
+    ))
+    
+    expected_procedures = int(input(
+        "How many procedures do you expect this year: "
+    ))
+    
+    # Run the calculation with their inputs
+    get_recommendation(
+        procedure=procedure,
+        insurer=insurer,
+        deductible_remaining=deductible_remaining,
+        coinsurance_pct=coinsurance_pct,
+        monthly_premium=monthly_premium,
+        expected_procedures=expected_procedures
+    )
+    
+    # Ask if they want to check another procedure
+    another = input("\nCheck another procedure? (yes/no): ")
+    if another.lower() == 'yes':
+        interactive_mode()
+
+# ─────────────────────────────────────────
+# CHOOSE MODE: TEST OR INTERACTIVE
+# ─────────────────────────────────────────
+
+print("\nWould you like to:")
+print("  1. Run test scenarios")
+print("  2. Enter your own information")
+
+choice = input("\nEnter 1 or 2: ")
+
+if choice == '1':
+    # Run the three test scenarios
+    get_recommendation(
+        procedure='Knee MRI',
+        insurer='Blue Shield',
+        deductible_remaining=1500,
+        coinsurance_pct=20,
+        monthly_premium=250,
+        expected_procedures=4
+    )
+    get_recommendation(
+        procedure='Knee MRI',
+        insurer='Anthem Blue Cross',
+        deductible_remaining=0,
+        coinsurance_pct=20,
+        monthly_premium=180,
+        expected_procedures=6
+    )
+    get_recommendation(
+        procedure='Lipid Panel',
+        insurer='Anthem Blue Cross',
+        deductible_remaining=200,
+        coinsurance_pct=30,
+        monthly_premium=320,
+        expected_procedures=3
+    )
+
+elif choice == '2':
+    interactive_mode()
+
+else:
+    print("Please enter 1 or 2")
