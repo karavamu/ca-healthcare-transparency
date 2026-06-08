@@ -1,0 +1,10 @@
+# Raw hospital MRF files - too large for git
+data/sutter_santa_rosa.csv
+data/sutter_alta_bates.csv
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# VS Code settings
+.vscode/
