@@ -1,30 +1,154 @@
+import os
 import csv
 # ─────────────────────────────────────────
 # DATA LOADING
 # ─────────────────────────────────────────
-def load_data():
-    """Load procedure data from CSV file."""
-    with open('data/procedures.csv', 'r') as file:
-        reader = csv.DictReader(file)
-        return list(reader)
+
+def load_data(use_real_data=True):
+    """Load procedure data.
+    
+    If use_real_data=True, loads from the
+    extracted MRF data with real hospital rates.
+    Falls back to hand-typed seed data if the
+    extracted file does not exist.
+    """
+    
+    real_data_path = 'data/extracted_rates.csv'
+    seed_data_path = 'data/procedures.csv'
+    
+    if use_real_data and \
+       os.path.exists(real_data_path):
+        return load_real_data(real_data_path)
+    else:
+        print("Using seed data (procedures.csv)")
+        with open(seed_data_path, 'r') as f:
+            reader = csv.DictReader(f)
+            return list(reader)
+
+def load_real_data(filepath):
+    """Load and normalize extracted MRF data
+    into the structure calculate.py expects."""
+    
+    rows = []
+    
+    with open(filepath, 'r') as f:
+        reader = csv.DictReader(f)
+        
+        for row in reader:
+            
+            # Skip chargemaster rows —
+            # we only want negotiated rate rows
+            if row['rate_type'] != 'negotiated':
+                continue
+            
+            # Skip rows with no negotiated rate
+            if not row['negotiated_rate']:
+                continue
+            
+            # Map extracted columns to the
+            # structure find_rate() expects
+            rows.append({
+                'hospital':         row['hospital'],
+                'insurer':          row['payer'],
+                'plan':             row['plan'],
+                'procedure':        row['description'],
+                'cpt_code':         row['cpt_code'],
+                'chargemaster_rate': '',
+                'negotiated_rate':  row['negotiated_rate'],
+                'cash_pay_rate':    row['cash_pay_rate'],
+                'region':           get_region(
+                                      row['hospital']),
+                'min_rate':         row['min_rate'],
+                'max_rate':         row['max_rate'],
+                'methodology':      row['methodology'],
+            })
+    
+    print(f"Loaded {len(rows)} real rates from "
+          f"{os.path.basename(filepath)}")
+    return rows
+
+def get_region(hospital_name):
+    """Map hospital name to California region."""
+    
+    regions = {
+        'Santa Rosa':  'Bay Area',
+        'Alta Bates':  'Bay Area',
+        'Sutter':      'Bay Area',
+        'UCSF':        'Bay Area',
+        'Stanford':    'Bay Area',
+        'Cedars':      'Los Angeles',
+        'Providence':  'Los Angeles',
+        'Scripps':     'San Diego',
+        'Sharp':       'San Diego',
+    }
+    
+    for keyword, region in regions.items():
+        if keyword.lower() in \
+           hospital_name.lower():
+            return region
+    
+    return 'California'    
 
 
 def find_rate(rows, procedure, insurer):
     """Find the negotiated and cash rate for a
-    specific procedure and insurer."""
+    specific procedure and insurer.
+    
+    Matches on procedure description or CPT code,
+    and insurer name (partial match supported).
+    Returns the best matching row or None."""
+    
+    insurer_lower = insurer.lower().strip()
+    proc_lower = procedure.lower().strip()
+    
+    # Try exact match first
     for row in rows:
-        if row['procedure'] == procedure and \
-           row['insurer'] == insurer:
+        row_insurer = row.get(
+            'insurer', '').lower().strip()
+        row_proc = row.get(
+            'procedure', '').lower().strip()
+        row_cpt = row.get('cpt_code', '').strip()
+        
+        insurer_match = insurer_lower in \
+                        row_insurer or \
+                        row_insurer in insurer_lower
+        
+        proc_match = proc_lower == row_proc or \
+                     proc_lower in row_proc or \
+                     row_proc in proc_lower
+        
+        if insurer_match and proc_match:
             return {
-                'hospital': row['hospital'],
-                'negotiated_rate': float(row['negotiated_rate']),
-                'cash_pay_rate': float(row['cash_pay_rate']),
-                'chargemaster_rate': float(row['chargemaster_rate']),
-                'region': row['region']
+                'hospital':         row.get(
+                                      'hospital',''),
+                'negotiated_rate':  float(row.get(
+                                      'negotiated_rate',
+                                      0)),
+                'cash_pay_rate':    float(row.get(
+                                      'cash_pay_rate',
+                                      0)) if row.get(
+                                      'cash_pay_rate') 
+                                      else None,
+                'chargemaster_rate': float(row.get(
+                                      'chargemaster_rate',
+                                      0)) if row.get(
+                                      'chargemaster_rate')
+                                      else None,
+                'region':           row.get(
+                                      'region',''),
+                'plan':             row.get(
+                                      'plan', ''),
+                'min_rate':         row.get(
+                                      'min_rate', ''),
+                'max_rate':         row.get(
+                                      'max_rate', ''),
             }
+    
     return None
 
-    # ─────────────────────────────────────────
+
+
+# ─────────────────────────────────────────
 # OOP CALCULATION
 # ─────────────────────────────────────────
 
@@ -171,12 +295,37 @@ def get_recommendation(procedure, insurer,
     print(f"{'='*55}")
     print(f"Hospital:            {rate_info['hospital']}")
     print(f"Insurer:             {insurer}")
+    plan = rate_info.get('plan','')
+    if plan:
+        print(f"Plan:                {plan}")
     print(f"Region:              {rate_info['region']}")
+    min_r = rate_info.get('min_rate','')
+    max_r = rate_info.get('max_rate','')
+    if min_r and max_r:
+        print(f"Rate range:          "
+              f"${float(min_r):,.2f} "
+              f"to ${float(max_r):,.2f} "
+              f"across all insurers")
 
     print(f"\n--- PRICING BREAKDOWN ---")
-    print(f"Chargemaster rate:   ${rate_info['chargemaster_rate']:>10,.2f}")
-    print(f"Negotiated rate:     ${rate_info['negotiated_rate']:>10,.2f}")
-    print(f"Cash pay rate:       ${rate_info['cash_pay_rate']:>10,.2f}")
+    # Only show chargemaster if available
+    if rate_info['chargemaster_rate']:
+        print(f"Chargemaster rate:   "
+              f"${rate_info['chargemaster_rate']:>10,.2f}")
+    else:
+        print(f"Chargemaster rate:   "
+              f"{'not published':>10}")
+    
+    print(f"Negotiated rate:     "
+          f"${rate_info['negotiated_rate']:>10,.2f}")
+    
+    # Only show cash rate if available
+    if rate_info['cash_pay_rate']:
+        print(f"Cash pay rate:       "
+              f"${rate_info['cash_pay_rate']:>10,.2f}")
+    else:
+        print(f"Cash pay rate:       "
+              f"{'not published':>10}")
 
     print(f"\n--- YOUR PLAN ---")
     print(f"Deductible remaining:  ${deductible_remaining:>8,.2f}")
@@ -212,36 +361,44 @@ def get_recommendation(procedure, insurer,
 # TEST SCENARIOS
 # ─────────────────────────────────────────
 
-# Scenario 1: High deductible, moderate premium
-# User has not met deductible yet
+# ─────────────────────────────────────────
+# TEST SCENARIOS WITH REAL DATA
+# ─────────────────────────────────────────
+
+print("\n" + "="*55)
+print("RUNNING WITH REAL CALIFORNIA HOSPITAL DATA")
+print("="*55)
+
+# Scenario 1: Colonoscopy with Anthem
+# User still in deductible phase
 get_recommendation(
-    procedure='Knee MRI',
-    insurer='Blue Shield',
+    procedure='Diagnostic colonoscopy',
+    insurer='Anthem',
     deductible_remaining=1500,
     coinsurance_pct=20,
     monthly_premium=250,
     expected_procedures=4
 )
 
-# Scenario 2: Deductible met, low premium
-# User has already met their deductible this year
+# Scenario 2: Knee MRI with Blue Shield
+# Deductible already met
 get_recommendation(
-    procedure='Knee MRI',
-    insurer='Anthem Blue Cross',
+    procedure='Mri jnt of lwr extre w/o dye',
+    insurer='Blue Shield',
     deductible_remaining=0,
     coinsurance_pct=20,
-    monthly_premium=180,
-    expected_procedures=6
+    monthly_premium=300,
+    expected_procedures=5
 )
 
-# Scenario 3: Lab work, partial deductible
-# User has some deductible remaining
+# Scenario 3: Knee MRI with Health Net
+# Partial deductible
 get_recommendation(
-    procedure='Lipid Panel',
-    insurer='Anthem Blue Cross',
-    deductible_remaining=200,
+    procedure='Mri jnt of lwr extre w/o dye',
+    insurer='Health Net',
+    deductible_remaining=500,
     coinsurance_pct=30,
-    monthly_premium=320,
+    monthly_premium=220,
     expected_procedures=3
 )
 
