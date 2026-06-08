@@ -1,0 +1,49 @@
+hospital,cpt_code,description,billing_class,setting,modifier,payer,plan,rate_type,negotiated_rate,cash_pay_rate,min_rate,max_rate,median_rate,count,methodology
+Sutter Santa Rosa Regional Hospital,73721,HCHG MRI EXTREM LOWER JOINT WO CONTR BIL,facility,inpatient,50,chargemaster,,chargemaster,7464.0,7464.0,,,,,chargemaster
+Sutter Santa Rosa Regional Hospital,73721,HCHG MRI EXTREM LOWER JOINT WO CONTR LT,facility,inpatient,LT,chargemaster,,chargemaster,4976.0,4976.0,,,,,chargemaster
+Sutter Santa Rosa Regional Hospital,73721,HCHG MRI EXTREM LOWER JOINT WO CONTR RT,facility,inpatient,RT,chargemaster,,chargemaster,4976.0,4976.0,,,,,chargemaster
+Sutter Santa Rosa Regional Hospital,80061,HCHG CORE LIPID PNL,facility,inpatient,,chargemaster,,chargemaster,331.0,331.0,,,,,chargemaster
+Sutter Santa Rosa Regional Hospital,45378,Diagnostic colonoscopy,facility,outpatient,,Aetna,Hmo / Ppo,negotiated,2780.0,1278.8,1278.8,3783.0,,,fee schedule|cash_rate_estimated
+Sutter Santa Rosa Regional Hospital,45378,Diagnostic colonoscopy,facility,outpatient,,Anthem,Individual,negotiated,2240.0,1278.8,1278.8,3783.0,,,fee schedule|cash_rate_estimated
+Sutter Santa Rosa Regional Hospital,45378,Diagnostic colonoscopy,facility,outpatient,,Anthem,Hmo/Ppo,negotiated,3110.0,1278.8,1278.8,3783.0,,,fee schedule|cash_rate_estimated
+Sutter Santa Rosa Regional Hospital,45378,Diagnostic colonoscopy,facility,outpatient,,Blue Shield,Individual,negotiated,2646.0,1278.8,1278.8,3783.0,,,fee schedule|cash_rate_estimated
+Sutter Santa Rosa Regional Hospital,45378,Diagnostic colonoscopy,facility,outpatient,,Blue Shield,Hmo/Ppo,negotiated,2997.0,1278.8,1278.8,3783.0,,,fee schedule|cash_rate_estimated
+Sutter Santa Rosa Regional Hospital,45378,Diagnostic colonoscopy,facility,outpatient,,Cigna,Hmo/Ppo,negotiated,3419.0,1278.8,1278.8,3783.0,,,fee schedule|cash_rate_estimated
+Sutter Santa Rosa Regional Hospital,45378,Diagnostic colonoscopy,facility,outpatient,,Health Net,Hmo/Ppo,negotiated,3783.0,1278.8,1278.8,3783.0,,,fee schedule|cash_rate_estimated
+Sutter Santa Rosa Regional Hospital,45378,Diagnostic colonoscopy,facility,outpatient,,United,Hmo / Ppo,negotiated,3306.0,1278.8,1278.8,3783.0,,,fee schedule|cash_rate_estimated
+Sutter Santa Rosa Regional Hospital,45378,Diagnostic colonoscopy,facility,outpatient,,Aetna,Hmo/Ppo,negotiated,2780.0,1278.8,1278.8,3783.0,,,fee schedule|cash_rate_estimated
+Sutter Santa Rosa Regional Hospital,45378,Diagnostic colonoscopy,facility,outpatient,,Anthem,Medicare Adv_ Hmo / Ppo,negotiated,1278.8,1278.8,1278.8,3783.0,,,fee schedule|cash_rate_estimated
+Sutter Santa Rosa Regional Hospital,73721,Mri jnt of lwr extre w/o dye,facility,outpatient,,Aetna,Hmo / Ppo,negotiated,2862.0,7464.0,328.1,3689.0,,,fee schedule
+Sutter Santa Rosa Regional Hospital,73721,Mri jnt of lwr extre w/o dye,facility,outpatient,,Anthem,Individual,negotiated,1236.0,7464.0,328.1,3689.0,,,fee schedule
+Sutter Santa Rosa Regional Hospital,73721,Mri jnt of lwr extre w/o dye,facility,outpatient,,Anthem,Hmo/Ppo,negotiated,1718.0,7464.0,328.1,3689.0,,,fee schedule
+Sutter Santa Rosa Regional Hospital,73721,Mri jnt of lwr extre w/o dye,facility,outpatient,,Blue Shield,Individual,negotiated,2170.0,7464.0,328.1,3689.0,,,fee schedule
+Sutter Santa Rosa Regional Hospital,73721,Mri jnt of lwr extre w/o dye,facility,outpatient,,Blue Shield,Hmo/Ppo,negotiated,2766.0,7464.0,328.1,3689.0,,,fee schedule
+Sutter Santa Rosa Regional Hospital,73721,Mri jnt of lwr extre w/o dye,facility,outpatient,,Cigna,Hmo/Ppo,negotiated,2847.0,7464.0,328.1,3689.0,,,fee schedule
+Sutter Santa Rosa Regional Hospital,73721,Mri jnt of lwr extre w/o dye,facility,outpatient,,Health Net,Hmo/Ppo,negotiated,3689.0,7464.0,328.1,3689.0,,,fee schedule
+Sutter Santa Rosa Regional Hospital,73721,Mri jnt of lwr extre w/o dye,facility,outpatient,,United,Hmo / Ppo,negotiated,2824.0,7464.0,328.1,3689.0,,,fee schedule
+Sutter Santa Rosa Regional Hospital,73721,Mri jnt of lwr extre w/o dye,facility,outpatient,,Aetna,Hmo/Ppo,negotiated,2862.0,7464.0,328.1,3689.0,,,fee schedule
+Sutter Santa Rosa Regional Hospital,73721,Mri jnt of lwr extre w/o dye,facility,outpatient,,Anthem,Medicare Adv_ Hmo / Ppo,negotiated,328.1,7464.0,328.1,3689.0,,,fee schedule
+Sutter Santa Rosa Regional Hospital,80061,Lipid panel,facility,outpatient,,Anthem,Medicare Adv_ Hmo / Ppo,negotiated,13.39,331.0,13.39,13.39,,,fee schedule
+Alta Bates Summit Medical Center,73721,HCHG MRI EXTREM LOWER JOINT WO CONTR BIL,facility,inpatient,50,chargemaster,,chargemaster,7464.0,7464.0,,,,,chargemaster
+Alta Bates Summit Medical Center,73721,HCHG MRI EXTREM LOWER JOINT WO CONTR LT,facility,inpatient,LT,chargemaster,,chargemaster,4976.0,4976.0,,,,,chargemaster
+Alta Bates Summit Medical Center,73721,HCHG MRI EXTREM LOWER JOINT WO CONTR RT,facility,inpatient,RT,chargemaster,,chargemaster,4976.0,4976.0,,,,,chargemaster
+Alta Bates Summit Medical Center,80061,HCHG CORE LIPID PNL,facility,inpatient,,chargemaster,,chargemaster,343.0,343.0,,,,,chargemaster
+Alta Bates Summit Medical Center,45378,Diagnostic colonoscopy,facility,outpatient,,Health Net,Hmo/Ppo,negotiated,3783.0,1322.29,1322.29,3783.0,,,fee schedule|cash_rate_estimated
+Alta Bates Summit Medical Center,45378,Diagnostic colonoscopy,facility,outpatient,,Aetna,Hmo/Ppo,negotiated,2780.0,1322.29,1322.29,3783.0,,,fee schedule|cash_rate_estimated
+Alta Bates Summit Medical Center,45378,Diagnostic colonoscopy,facility,outpatient,,Blue Shield,Hmo/Ppo,negotiated,3012.0,1322.29,1322.29,3783.0,,,fee schedule|cash_rate_estimated
+Alta Bates Summit Medical Center,45378,Diagnostic colonoscopy,facility,outpatient,,United,Hmo / Ppo,negotiated,3306.0,1322.29,1322.29,3783.0,,,fee schedule|cash_rate_estimated
+Alta Bates Summit Medical Center,45378,Diagnostic colonoscopy,facility,outpatient,,Blue Shield,Individual,negotiated,2660.0,1322.29,1322.29,3783.0,,,fee schedule|cash_rate_estimated
+Alta Bates Summit Medical Center,45378,Diagnostic colonoscopy,facility,outpatient,,Cigna,Hmo/Ppo,negotiated,3451.0,1322.29,1322.29,3783.0,,,fee schedule|cash_rate_estimated
+Alta Bates Summit Medical Center,45378,Diagnostic colonoscopy,facility,outpatient,,Anthem,Hmo/Ppo,negotiated,3110.0,1322.29,1322.29,3783.0,,,fee schedule|cash_rate_estimated
+Alta Bates Summit Medical Center,45378,Diagnostic colonoscopy,facility,outpatient,,Anthem,Individual,negotiated,2240.0,1322.29,1322.29,3783.0,,,fee schedule|cash_rate_estimated
+Alta Bates Summit Medical Center,45378,Diagnostic colonoscopy,facility,outpatient,,Anthem,Medicare Adv_ Hmo / Ppo,negotiated,1322.29,1322.29,1322.29,3783.0,,,fee schedule|cash_rate_estimated
+Alta Bates Summit Medical Center,73721,Mri jnt of lwr extre w/o dye,facility,outpatient,,Health Net,Hmo/Ppo,negotiated,3689.0,7464.0,339.26,3689.0,,,fee schedule
+Alta Bates Summit Medical Center,73721,Mri jnt of lwr extre w/o dye,facility,outpatient,,Aetna,Hmo/Ppo,negotiated,2862.0,7464.0,339.26,3689.0,,,fee schedule
+Alta Bates Summit Medical Center,73721,Mri jnt of lwr extre w/o dye,facility,outpatient,,Blue Shield,Hmo/Ppo,negotiated,2779.0,7464.0,339.26,3689.0,,,fee schedule
+Alta Bates Summit Medical Center,73721,Mri jnt of lwr extre w/o dye,facility,outpatient,,United,Hmo / Ppo,negotiated,2824.0,7464.0,339.26,3689.0,,,fee schedule
+Alta Bates Summit Medical Center,73721,Mri jnt of lwr extre w/o dye,facility,outpatient,,Blue Shield,Individual,negotiated,2179.0,7464.0,339.26,3689.0,,,fee schedule
+Alta Bates Summit Medical Center,73721,Mri jnt of lwr extre w/o dye,facility,outpatient,,Cigna,Hmo/Ppo,negotiated,2874.0,7464.0,339.26,3689.0,,,fee schedule
+Alta Bates Summit Medical Center,73721,Mri jnt of lwr extre w/o dye,facility,outpatient,,Anthem,Hmo/Ppo,negotiated,3231.0,7464.0,339.26,3689.0,,,fee schedule
+Alta Bates Summit Medical Center,73721,Mri jnt of lwr extre w/o dye,facility,outpatient,,Anthem,Individual,negotiated,2327.0,7464.0,339.26,3689.0,,,fee schedule
+Alta Bates Summit Medical Center,73721,Mri jnt of lwr extre w/o dye,facility,outpatient,,Anthem,Medicare Adv_ Hmo / Ppo,negotiated,339.26,7464.0,339.26,3689.0,,,fee schedule
+Alta Bates Summit Medical Center,80061,Lipid panel,facility,outpatient,,Anthem,Medicare Adv_ Hmo / Ppo,negotiated,13.39,343.0,13.39,13.39,,,fee schedule
