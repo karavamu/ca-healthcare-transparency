@@ -271,7 +271,9 @@ def get_recommendation(procedure, insurer,
     )
 
     through_insurance = oop_result['patient_pays']
-    cash_total = rate_info['cash_pay_rate']
+    cash_total = rate_info['cash_pay_rate'] \
+                 if rate_info['cash_pay_rate'] \
+                 else rate_info['negotiated_rate']
 
     # Per-procedure recommendation (ignoring premium)
     if cash_total < through_insurance:
@@ -358,10 +360,6 @@ def get_recommendation(procedure, insurer,
 
 
 # ─────────────────────────────────────────
-# TEST SCENARIOS
-# ─────────────────────────────────────────
-
-# ─────────────────────────────────────────
 # TEST SCENARIOS WITH REAL DATA
 # ─────────────────────────────────────────
 
@@ -369,38 +367,6 @@ print("\n" + "="*55)
 print("RUNNING WITH REAL CALIFORNIA HOSPITAL DATA")
 print("="*55)
 
-# Scenario 1: Colonoscopy with Anthem
-# User still in deductible phase
-get_recommendation(
-    procedure='Diagnostic colonoscopy',
-    insurer='Anthem',
-    deductible_remaining=1500,
-    coinsurance_pct=20,
-    monthly_premium=250,
-    expected_procedures=4
-)
-
-# Scenario 2: Knee MRI with Blue Shield
-# Deductible already met
-get_recommendation(
-    procedure='Mri jnt of lwr extre w/o dye',
-    insurer='Blue Shield',
-    deductible_remaining=0,
-    coinsurance_pct=20,
-    monthly_premium=300,
-    expected_procedures=5
-)
-
-# Scenario 3: Knee MRI with Health Net
-# Partial deductible
-get_recommendation(
-    procedure='Mri jnt of lwr extre w/o dye',
-    insurer='Health Net',
-    deductible_remaining=500,
-    coinsurance_pct=30,
-    monthly_premium=220,
-    expected_procedures=3
-)
 
 # ─────────────────────────────────────────
 # INTERACTIVE MODE
@@ -444,15 +410,19 @@ def interactive_mode():
     
     deductible_remaining = float(input(
         "How much deductible do you have remaining ($): "
-    ))
+    ).replace('$', '').replace(',', '').strip())
     
-    coinsurance_pct = float(input(
+    coinsurance_raw = input(
         "What is your coinsurance percentage (e.g. 20 for 20%): "
-    ))
+    )
+    # Strip % sign if user types it
+    coinsurance_pct = float(
+        coinsurance_raw.replace('%', '').strip()
+    )
     
     monthly_premium = float(input(
         "What is your monthly premium ($): "
-    ))
+    ).replace('$', '').replace(',', '').strip())
     
     expected_procedures = int(input(
         "How many procedures do you expect this year: "
@@ -484,29 +454,29 @@ print("  2. Enter your own information")
 choice = input("\nEnter 1 or 2: ")
 
 if choice == '1':
-    # Run the three test scenarios
+    # ── Real data scenarios ──
     get_recommendation(
-        procedure='Knee MRI',
-        insurer='Blue Shield',
+        procedure='Diagnostic colonoscopy',
+        insurer='Anthem',
         deductible_remaining=1500,
         coinsurance_pct=20,
         monthly_premium=250,
         expected_procedures=4
     )
     get_recommendation(
-        procedure='Knee MRI',
-        insurer='Anthem Blue Cross',
+        procedure='Mri jnt of lwr extre w/o dye',
+        insurer='Blue Shield',
         deductible_remaining=0,
         coinsurance_pct=20,
-        monthly_premium=180,
-        expected_procedures=6
+        monthly_premium=300,
+        expected_procedures=5
     )
     get_recommendation(
-        procedure='Lipid Panel',
-        insurer='Anthem Blue Cross',
-        deductible_remaining=200,
+        procedure='Mri jnt of lwr extre w/o dye',
+        insurer='Health Net',
+        deductible_remaining=500,
         coinsurance_pct=30,
-        monthly_premium=320,
+        monthly_premium=220,
         expected_procedures=3
     )
 
